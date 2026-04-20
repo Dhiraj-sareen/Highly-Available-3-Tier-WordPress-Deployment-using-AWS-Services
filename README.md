@@ -23,6 +23,32 @@ This project includes several important features that make it closer to a real-w
 
 ![Architecture Diagram](Result/Architecture%20Diagram.png)
 
+The architecture is designed in a way that separates concerns and keeps sensitive components secure. At the base level, a VPC (Virtual Private Cloud) is created with the CIDR block 10.0.0.0/16. This acts as the network boundary for the entire project. Inside the VPC, multiple subnets are created across two availability zones to ensure high availability.
+
+- 2 Public Subnets (for ALB and NAT Gateways)
+- 2 Private App Subnets (for EC2 instances)
+- 2 Private DB Subnets (for RDS)
+
+The Internet Gateway (IGW) is attached to the VPC to allow resources in public subnets to communicate with the internet. Meanwhile, private subnets do not have direct internet access. Instead, they use NAT Gateways placed in public subnets to access external resources securely (like downloading packages or updates).
+
+The Application Load Balancer (ALB) sits in the public subnets and acts as the entry point for users. When someone opens the website, the request hits the ALB, which then forwards it to one of the EC2 instances in the private subnets.
+
+The application layer consists of EC2 instances running Apache, PHP, and WordPress. These instances are not directly exposed to the internet, which improves security. Instead, they only accept traffic from the ALB.
+
+To make sure all EC2 instances serve the same content, EFS (Elastic File System) is used. It is mounted on all EC2 instances so that uploaded files, themes, and plugins are shared across servers.
+
+The database layer uses Amazon RDS (MySQL), which is deployed in private subnets. It is not publicly accessible and can only be accessed by the application layer through a security group rule.
+
+Security Groups act like firewalls between layers:
+
+- ALB → accepts traffic from the internet
+- EC2 → accepts traffic only from ALB
+- RDS → accepts traffic only from EC2
+- EFS → allows NFS access from EC2
+
+This layered design ensures that even if one part is exposed, the rest of the system remains protected.
+
+
 
 
 
