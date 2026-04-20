@@ -91,7 +91,7 @@ Next, launch and configure the compute layer. Start with a **temporary bastion h
 * Mount **EFS** to `/var/www/html`
 * Download and configure **WordPress**
 
-
+![Architecture Diagram](puttyssh.png)
 
 Then deploy the application servers by launching **two EC2 instances in private subnets**. Use a **user-data script** to automate setup so everything installs and configures on startup.
 
