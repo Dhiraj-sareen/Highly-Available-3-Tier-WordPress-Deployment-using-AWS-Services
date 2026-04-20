@@ -50,7 +50,7 @@ This layered design ensures that even if one part is exposed, the rest of the sy
 
 # Setup Instructions
 
-**#1: Networking Setup -**
+# 1: Networking Setup
 
 Create a **VPC (10.0.0.0/16)** with DNS hostnames enabled, then set up subnets across multiple AZs for availability.
 
@@ -64,7 +64,7 @@ This forms the basic, secure network foundation.
 
 ![Architecture Diagram](Result/subnets-1.png)
 
-**#2:NAT Gateway & Security Groups -**
+# 2:NAT Gateway & Security Groups
 Next, set up internet access and secure communication between components. Allocate **2 Elastic IPs** and create **2 NAT Gateways** (one in each AZ) to provide outbound internet access for private subnets. Update the private route tables to route traffic through these NAT Gateways. Then configure Security Groups to control traffic flow:
 
 * **ALB SG** → allow HTTP/HTTPS from anywhere
@@ -74,14 +74,14 @@ Next, set up internet access and secure communication between components. Alloca
 * **SSH SG** → allow SSH only from your IP
 This ensures secure and controlled communication across all layers.
 
-**#3: Database & Storage Setup -**
+# 3:Database & Storage Setup
 Now configure persistent storage and the database layer. Create a **DB Subnet Group** using the private DB subnets, then launch an **RDS MySQL** instance with public access disabled and strong credentials to keep it secure.
 
 Next, set up shared storage by creating an **EFS file system** and attaching it to the private app subnets, ensuring security groups allow NFS (2049) access from web servers.
 
 RDS handles backups and patching automatically, while EFS provides scalable shared storage across instances.
 
-**#4:Compute Setup (EC2 + WordPress)-**
+# 4:Compute Setup (EC2 + WordPress)
 
 Next, launch and configure the compute layer. Start with a **temporary bastion host** in a public subnet to securely access private resources via SSH (PuTTY or terminal).
 
@@ -103,7 +103,7 @@ During setup, complete key tasks like setting Apache permissions, editing `wp-co
 
 ![Architecture Diagram](wplogin.png)
 
-**#5:Load Balancer Setup-**
+# 5:Load Balancer Setup
 Finally, expose the application to users using an **Application Load Balancer (ALB)**. Deploy the ALB in the public subnets and attach the appropriate security group to allow HTTP/HTTPS traffic.
 
 * Create **Application Load Balancer** (in public subnets)
