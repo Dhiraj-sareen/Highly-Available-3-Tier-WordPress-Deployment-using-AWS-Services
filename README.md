@@ -62,7 +62,9 @@ Create a **VPC (10.0.0.0/16)** with DNS hostnames enabled, then set up subnets a
 * Route tables: Public → IGW, Private → NAT
 This forms the basic, secure network foundation.
 
-![Architecture Diagram](Result/subnets%-%1.png)
+![Architecture Diagram](Result/subnets-1.png)
+
+
 
 
 
