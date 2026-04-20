@@ -19,7 +19,7 @@ This project includes several important features that make it closer to a real-w
 - Bastion host setup for secure SSH access to private instances
 - Scalable design that can be extended using Auto Scaling
 
-# Architecture / How It Works
+# Architecture Diagram
 
 ![Architecture Diagram](Result/Architecture%20Diagram.png)
 
