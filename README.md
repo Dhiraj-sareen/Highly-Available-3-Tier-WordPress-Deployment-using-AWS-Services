@@ -101,6 +101,43 @@ Then deploy the application servers by launching **two EC2 instances in private 
 
 During setup, complete key tasks like setting Apache permissions, editing `wp-config.php`, and connecting WordPress to the **RDS MySQL** database. This step activates the application layer.
 
+![Architecture Diagram](wplogin.png)
+
+**#5:Load Balancer Setup-**
+Finally, expose the application to users using an **Application Load Balancer (ALB)**. Deploy the ALB in the public subnets and attach the appropriate security group to allow HTTP/HTTPS traffic.
+
+* Create **Application Load Balancer** (in public subnets)
+* Attach **ALB Security Group**
+* Create a **Target Group** and register EC2 instances
+* Configure **listener (HTTP – port 80)**
+
+![Architecture Diagram](ALB.png)
+Once configured, AWS provides a DNS name—accessing it will load your WordPress site. You can also update WordPress settings to use the ALB DNS instead of instance IP for better accessibility.
+
+![Architecture Diagram](Wp-dashboard)
+
+# Challenges & Learnings
+
+This project was not just about following steps — there were a lot of small things that required debugging and understanding.
+
+One of the main challenges was dealing with networking and routing. Understanding how traffic flows between public and private subnets, and how NAT Gateways work, took some time to fully grasp. Initially, instances in private subnets were unable to install packages because routing was misconfigured.
+
+Another tricky part was security groups. Since everything is locked down by default, even a small mistake (like missing a rule for port 3306 or 2049) caused services to fail. Debugging these issues helped in understanding how tightly AWS controls network access.
+
+Setting up EFS correctly was also a bit challenging. Mounting it, setting permissions, and ensuring it works across multiple EC2 instances required careful steps.
+
+![Architecture Diagram](Dberror.png)
+
+Working with WordPress configuration (especially connecting it to RDS) also required attention to detail, particularly with database endpoints and credentials.
+
+Overall, this project helped build a strong understanding of:
+
+- Real-world cloud architecture design
+- AWS networking fundamentals
+- Secure system design principles
+- Debugging distributed systems
+
+
 
 
 
