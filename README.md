@@ -85,7 +85,7 @@ RDS handles backups and patching automatically, while EFS provides scalable shar
 
 Next, launch and configure the compute layer. Start with a **temporary bastion host** in a public subnet to securely access private resources via SSH (PuTTY or terminal).
 
-![Architecture Diagram](webserverec2.png)
+![Architecture Diagram](webserver%ec2.png)
 
 * Install **Apache, PHP, MySQL client**
 * Mount **EFS** to `/var/www/html`
