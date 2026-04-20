@@ -48,6 +48,21 @@ Security Groups act like firewalls between layers:
 
 This layered design ensures that even if one part is exposed, the rest of the system remains protected.
 
+# Setup Instructions
+
+**#1: Networking Setup -**
+
+Create a **VPC (10.0.0.0/16)** with DNS hostnames enabled, then set up subnets across multiple AZs for availability.
+
+![Architecture Diagram](Result/vpc.png)
+
+* **2 public subnets**
+* **4 private subnets** (app + DB)
+* Attach **Internet Gateway (IGW)**
+* Route tables: Public → IGW, Private → NAT
+This forms the basic, secure network foundation.
+
+![Architecture Diagram](Result/subnets%-%1.png)
 
 
 
