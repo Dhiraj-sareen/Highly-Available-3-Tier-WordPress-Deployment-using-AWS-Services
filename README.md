@@ -85,11 +85,13 @@ RDS handles backups and patching automatically, while EFS provides scalable shar
 
 Next, launch and configure the compute layer. Start with a **temporary bastion host** in a public subnet to securely access private resources via SSH (PuTTY or terminal).
 
-![Architecture Diagram](webserver%ec2.png)
+![Architecture Diagram](webserverec2.png)
 
 * Install **Apache, PHP, MySQL client**
 * Mount **EFS** to `/var/www/html`
 * Download and configure **WordPress**
+
+
 
 Then deploy the application servers by launching **two EC2 instances in private subnets**. Use a **user-data script** to automate setup so everything installs and configures on startup.
 
