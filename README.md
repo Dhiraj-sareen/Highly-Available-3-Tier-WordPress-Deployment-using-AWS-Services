@@ -64,6 +64,43 @@ This forms the basic, secure network foundation.
 
 ![Architecture Diagram](Result/subnets-1.png)
 
+**#2:NAT Gateway & Security Groups -**
+Next, set up internet access and secure communication between components. Allocate **2 Elastic IPs** and create **2 NAT Gateways** (one in each AZ) to provide outbound internet access for private subnets. Update the private route tables to route traffic through these NAT Gateways. Then configure Security Groups to control traffic flow:
+
+* **ALB SG** → allow HTTP/HTTPS from anywhere
+* **Web Server SG** → allow traffic only from ALB
+* **DB SG** → allow MySQL (3306) from web servers
+* **EFS SG** → allow NFS (2049) from web servers
+* **SSH SG** → allow SSH only from your IP
+This ensures secure and controlled communication across all layers.
+
+**#3: Database & Storage Setup -**
+Now configure persistent storage and the database layer. Create a **DB Subnet Group** using the private DB subnets, then launch an **RDS MySQL** instance with public access disabled and strong credentials to keep it secure.
+
+Next, set up shared storage by creating an **EFS file system** and attaching it to the private app subnets, ensuring security groups allow NFS (2049) access from web servers.
+
+RDS handles backups and patching automatically, while EFS provides scalable shared storage across instances.
+
+**#4:Compute Setup (EC2 + WordPress)-**
+
+Next, launch and configure the compute layer. Start with a **temporary bastion host** in a public subnet to securely access private resources via SSH (PuTTY or terminal).
+
+![Architecture Diagram](webserverec2.png)
+
+* Install **Apache, PHP, MySQL client**
+* Mount **EFS** to `/var/www/html`
+* Download and configure **WordPress**
+
+Then deploy the application servers by launching **two EC2 instances in private subnets**. Use a **user-data script** to automate setup so everything installs and configures on startup.
+
+* Auto-install required packages
+* Mount EFS during boot
+* Configure environment
+
+During setup, complete key tasks like setting Apache permissions, editing `wp-config.php`, and connecting WordPress to the **RDS MySQL** database. This step activates the application layer.
+
+
+
 
 
 
