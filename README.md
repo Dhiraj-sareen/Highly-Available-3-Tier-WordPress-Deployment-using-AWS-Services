@@ -1,5 +1,6 @@
 # Highly-Available-3-Tier-WordPress-Deployment-using-AWS-Services
 
+![Architecture Diagram](Result/Wp-dashboard)
 This project focuses on deploying a WordPress website using a traditional 3-tier architecture on AWS. Instead of putting everything on a single server, the system is split into three layers: the presentation layer, the application layer, and the database layer.
 
 The main idea behind this project was to simulate how an actual production-grade web application is deployed in the cloud. By separating concerns and distributing components across multiple services, we reduce single points of failure and make the system easier to scale and maintain. The setup uses AWS services like VPC, EC2, RDS, EFS, and ALB to build a system where users can access a WordPress website through a load balancer, while the backend and database remain protected inside private subnets.
