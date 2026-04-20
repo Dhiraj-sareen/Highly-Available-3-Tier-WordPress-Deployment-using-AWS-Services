@@ -89,13 +89,13 @@ RDS handles backups and patching automatically, while EFS provides scalable shar
 
 Next, launch and configure the compute layer. Start with a **temporary bastion host** in a public subnet to securely access private resources via SSH (PuTTY or terminal).
 
-![Architecture Diagram](webserverec2.png)
+![Architecture Diagram](Result/webserverec2.png)
 
 * Install **Apache, PHP, MySQL client**
 * Mount **EFS** to `/var/www/html`
 * Download and configure **WordPress**
 
-![Architecture Diagram](puttyssh.png)
+![Architecture Diagram](Result/puttyssh.png)
 
 Then deploy the application servers by launching **two EC2 instances in private subnets**. Use a **user-data script** to automate setup so everything installs and configures on startup.
 
@@ -105,7 +105,7 @@ Then deploy the application servers by launching **two EC2 instances in private 
 
 During setup, complete key tasks like setting Apache permissions, editing `wp-config.php`, and connecting WordPress to the **RDS MySQL** database. This step activates the application layer.
 
-![Architecture Diagram](wplogin.png)
+![Architecture Diagram](Result/wplogin.png)
 
 # 5: Load Balancer Setup
 Finally, expose the application to users using an **Application Load Balancer (ALB)**. Deploy the ALB in the public subnets and attach the appropriate security group to allow HTTP/HTTPS traffic.
@@ -115,10 +115,10 @@ Finally, expose the application to users using an **Application Load Balancer (A
 * Create a **Target Group** and register EC2 instances
 * Configure **listener (HTTP – port 80)**
 
-![Architecture Diagram](ALB.png)
+![Architecture Diagram](Result/ALB.png)
 Once configured, AWS provides a DNS name—accessing it will load your WordPress site. You can also update WordPress settings to use the ALB DNS instead of instance IP for better accessibility.
 
-![Architecture Diagram](Wp-dashboard)
+![Architecture Diagram](Result/Wp-dashboard)
 
 # Challenges & Learnings
 
@@ -130,7 +130,7 @@ Another tricky part was security groups. Since everything is locked down by defa
 
 Setting up EFS correctly was also a bit challenging. Mounting it, setting permissions, and ensuring it works across multiple EC2 instances required careful steps.
 
-![Architecture Diagram](Dberror.png)
+![Architecture Diagram](Result/Dberror.png)
 
 Working with WordPress configuration (especially connecting it to RDS) also required attention to detail, particularly with database endpoints and credentials.
 
